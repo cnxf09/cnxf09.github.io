@@ -89,6 +89,17 @@ d}\)</span>.</li>
 <p>模型的参数为 <span class="math inline">\(\theta=\{v_w,u_w\}_{w\in
 V}\)</span>,共<span class="math inline">\(2|V|d\)</span>个.</p>
 <h3 id="似然函数">似然函数</h3>
+<p>Skip-gram 的假设是, 给定中心词时, 各上下文词条件独立. 在此假设下,
+语料的似然函数 <span class="math display">\[
+L(\theta)=\prod_{t=1}^T\prod_{-c\le j\le c\\j\ne 0}p(w_{t+j}|w_t;\theta)
+\]</span> 变量<span
+class="math inline">\(p(w_{t+j}|w_t;\theta)\)</span>的含义是位置<span
+class="math inline">\(t\)</span>的中心词为<span
+class="math inline">\(w_t\)</span>时, 位置<span
+class="math inline">\(t+j\)</span> 的词是<span
+class="math inline">\(w_{t+j}\)</span>的概率. 对语料中的每个词,
+我们选取大小<span class="math inline">\(2c\)</span>的窗口, 累乘上述概率,
+得到的即为似然函数.</p>
 </div>
   </div>
 
