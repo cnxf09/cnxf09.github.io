@@ -435,6 +435,29 @@ h1 em { color: var(--accent); font-style: normal; }
 .callout-warning { --c: var(--gold); }
 .callout-danger { --c: #c8553d; }
 
+/* GitHub 风格提示框（> [!NOTE] 等） */
+.alert { --c: #4a7cab; margin: 1.6em 0; padding: 2px 0 2px 1.1em; border-left: 3px solid var(--c); }
+.alert-title { display: flex; align-items: center; gap: 8px; margin: .3em 0 .5em !important; font-family: var(--font-sans); font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--c); }
+.alert-icon { flex: none; }
+.alert > :last-child { margin-bottom: .3em; }
+.alert > p, .alert > ul, .alert > ol { margin-bottom: .8em; }
+.alert-tip { --c: #5c7a4d; }
+.alert-important { --c: #7a69a8; }
+.alert-warning { --c: #a37a24; }
+.alert-caution { --c: #c8553d; }
+details.alert > summary { list-style: none; cursor: pointer; user-select: none; }
+details.alert > summary::-webkit-details-marker { display: none; }
+details.alert > summary::after { content: ""; width: 7px; height: 7px; margin-left: 2px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+details.alert[open] > summary::after { transform: rotate(45deg); }
+details.alert:not([open]) > summary { margin-bottom: .3em !important; }
+@media (prefers-color-scheme: dark) {
+  .alert-note { --c: #93b8de; }
+  .alert-tip { --c: #a5c296; }
+  .alert-important { --c: #b4a6dc; }
+  .alert-warning { --c: #e3c07b; }
+  .alert-caution { --c: #e88b76; }
+}
+
 /* ========== About / misc ========== */
 .about { max-width: var(--measure); margin: 0 auto; }
 .about .prose { font-size: 17px; }
