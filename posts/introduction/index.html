@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>[零知识证明]第1章 基本概念 · cnxf</title>
+  <meta name="description" content="我本微末凡尘，却也心向天空">
+  <meta property="og:title" content="[零知识证明]第1章 基本概念 · cnxf">
+  <meta property="og:site_name" content="cnxf">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="site-header" data-scrolled="false">
+  <div class="container">
+    <a class="wordmark" href="/" aria-label="cnxf 首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" fill="#f3e3d8"/>
+        <path d="M7 25c4-1.6 7-1.6 10 0s7 1.6 10 0 6-1.6 7-1.2" fill="none" stroke="#6a9bcc" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24.5" cy="14.5" r="5" fill="#d97757"/>
+        <circle cx="12" cy="13" r="1.3" fill="#1a1a18"/>
+      </svg>cnxf
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      <a href="/blog/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a1.5 1.5 0 0 0-1.5-1.5h-5A1.5 1.5 0 0 1 4 16z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><span class="nav-label">文章</span>
+      </a>
+      
+      <a href="/about/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.2 3.9-5 7-5s5.8 1.8 7 5"/></svg><span class="nav-label">关于</span>
+      </a>
+      
+      <a href="https://github.com/cnxf09" target="_blank" rel="noopener noreferrer">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span class="nav-label">GitHub</span>
+      </a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main>
+    
+<article class="article-layout" style="--accent: #d97757">
+  <header class="article-head">
+    <div class="eyebrow">
+      <a class="chip" href="/series/notes/"><span class="swatch" aria-hidden="true"></span>数理笔记</a>
+      <time datetime="2026-11-12">2026 年 11 月 12 日</time>
+      <span class="dot"></span>
+      <span>约 2 分钟</span>
+    </div>
+    <h1>[零知识证明]第1章 基本概念</h1>
+    
+  </header>
+
+  
+
+  <div class="article-main">
+    <details class="toc-mobile" hidden><summary>目录<span>＋</span></summary><ol class="toc-list"></ol></details>
+    <div class="prose" id="prose"><h1 id="可验证计算">可验证计算</h1>
+<p>首先介绍可验证计算的概念, 可以分为IPs和论证.</p>
+<ul>
+<li><strong>可验证计算</strong>(verifiable computing, VC):
+指的是交互式证明(interactive proofs,
+IPs)和论证(argument)的一类密码学协议
+<ul>
+<li>使证明者能够向证明者保证, 自己正确执行了所要求的计算</li>
+<li><strong>论证</strong>:
+允许这类”证明”存在——找到错误断言要极其巨大的计算能力</li>
+<li><strong>IP</strong>s: 不允许上述这类”证明”存在</li>
+</ul></li>
+</ul>
+<p>当 VC 协议具有一种称为<em>零知识</em>的性质时,
+即证明或论证除自身的有效性外,不透露任何信息,
+它们在密码学场景中会特别有用.</p>
+<p>下面有一个例子说明零知识协议为何有用</p>
+<blockquote>
+<p>例: 假设 Alice 选择一个随机口令<span
+class="math inline">\(x\)</span>并且公布了其哈希值<span
+class="math inline">\(z=h(x)\)</span>,其中<span
+class="math inline">\(h\)</span>是一个单向函数.Alice如何让 Bob 相信
+Alice 就是公布<span class="math inline">\(z\)</span>的那个人?</p>
+<p>Alice只需要向 Bob 证明，她能找到一个<span
+class="math inline">\(x^{\prime}\)</span>使得<span
+class="math inline">\(h(x^{\prime})=z\)</span>即可.一个简单的方法是Alice直接将<span
+class="math inline">\(x\)</span>发送给Bob,但这显然不是零知识的.</p>
+</blockquote>
+<p>我们的目标是介绍所谓的<em>零知识简洁非交互式知识论证</em>(zero-knowledge
+Succinct Non-interactive Arguments of Knowledge, zk-SNARKs).</p>
+<ul>
+<li><p>简洁: 证明很短</p></li>
+<li><p>非交互式: 证明是静态的,即仅有证明者发送的一条消息构成</p></li>
+<li><p>知识: 协议不仅确立了某个断言为真,
+还确立了证明者<em>知道</em>一个能够证实该断言为真的”见证”</p>
+<blockquote>
+<p>(ps.应该没人能看懂上面这个长难句,
+举个例子)上面这个例子实际上需要针对”存在一个口令<span
+class="math inline">\(x\)</span>, 使得<span
+class="math inline">\(h(x)=z\)</span>“这一断言的零知识<strong>知识</strong>证明.意思就是,
+证明者不仅要求Bob相信这一断言,即存在<span
+class="math inline">\(z\)</span>在<span
+class="math inline">\(h\)</span>下的原象,而且还要相信Alice知道原象<span
+class="math inline">\(x\)</span>.</p>
+</blockquote></li>
+</ul>
+<h1 id="零知识协议的设计方法">零知识协议的设计方法</h1>
+<p>论证系统通常通过两个步骤构建.</p>
+<ol type="1">
+<li>首先, 在涉及一个或多个证明者的模型中, 构建具有信息论安全的协议,例如
+IP,
+MIP或PCP.模型假设证明者的行为受到某种限制(例如,在MIP中假设证明者不会将各自从验证者处收到的挑战信息发送给其他证明者)</li>
+<li>其次, 将该具有信息论安全性的协议与密码学相结合,
+以”强制”一个(单独的)证明者按所限制的的方式行事,从而得到一个论证系统.这一步通常赋予所得论证系统一些重要的性质,
+例如零知识性, 简洁性和非交互性.如果这些都满足,如前所述,它就是一个
+zk-SNARK.</li>
+</ol>
+<p>(现在其实看不懂上面👆)</p>
+<hr />
+</div>
+  </div>
+
+  <aside class="toc-side" hidden>
+    <nav class="toc-panel" aria-label="目录">
+      <div class="toc-title">目录</div>
+      <ol class="toc-list"></ol>
+    </nav>
+  </aside>
+
+  <footer class="article-foot">
+    <span>发布于 2026 年 11 月 12 日</span>
+    
+    
+    <span class="tags"><span class="tag">#zk</span></span>
+    
+    <a href="/blog/">全部文章</a>
+  </footer>
+
+  
+  <nav class="post-nav" aria-label="上下篇">
+    
+    <a class="prev" href="/posts/word2vec-1/"><span><svg class="arrow arrow-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>上一篇</span><b>CS224N笔记1: 词向量</b></a>
+    
+    
+  </nav>
+  
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container footer-meta">
+    <span>© 2026 cnxf</span>
+    <span class="dot"></span>
+    <span>我本微末凡尘，却也心向天空</span>
+  </div>
+  <div class="footer-river" aria-hidden="true">
+    <svg class="footer-river-svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <g class="river-layer r1"><path d="M0 70 C 126 44, 234 44, 360 70 S 594 96, 720 70 S 954 44, 1080 70 S 1314 96, 1440 70 S 1674 44, 1800 70 S 2034 96, 2160 70 S 2394 44, 2520 70 S 2754 96, 2880 70 V150 H0 Z" fill="#6a9bcc" opacity=".14"/></g>
+      <g class="river-layer r2"><path d="M0 95 C 252 73, 468 73, 720 95 S 1188 117, 1440 95 S 1908 73, 2160 95 S 2628 117, 2880 95 V150 H0 Z" fill="#7f9e6e" opacity=".14"/></g>
+      <g class="river-layer r3"><path d="M0 118 C 84 102, 156 102, 240 118 S 396 134, 480 118 S 636 102, 720 118 S 876 134, 960 118 S 1116 102, 1200 118 S 1356 134, 1440 118 S 1596 102, 1680 118 S 1836 134, 1920 118 S 2076 102, 2160 118 S 2316 134, 2400 118 S 2556 102, 2640 118 S 2796 134, 2880 118 V150 H0 Z" fill="#d97757" opacity=".16"/></g>
+    </svg>
+    <svg class="drifter" viewBox="-14 -16 28 24" width="34" height="29"><path d="M-12 0 h24 l-5 6 h-14 z" fill="#454440"/><path d="M0 -1 V-14 l8 12 z" fill="#d97757"/><path d="M-1 -1 V-11 l-6 10 z" fill="#e3b04b"/></svg>
+  </div>
+</footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
