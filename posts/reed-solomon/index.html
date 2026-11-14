@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>[零知识证明] 第2章 指纹方法与Freivalds 算法 · cnxf</title>
+  <meta name="description" content="我本微末凡尘，却也心向天空">
+  <meta property="og:title" content="[零知识证明] 第2章 指纹方法与Freivalds 算法 · cnxf">
+  <meta property="og:site_name" content="cnxf">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="site-header" data-scrolled="false">
+  <div class="container">
+    <a class="wordmark" href="/" aria-label="cnxf 首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" fill="#f3e3d8"/>
+        <path d="M7 25c4-1.6 7-1.6 10 0s7 1.6 10 0 6-1.6 7-1.2" fill="none" stroke="#6a9bcc" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24.5" cy="14.5" r="5" fill="#d97757"/>
+        <circle cx="12" cy="13" r="1.3" fill="#1a1a18"/>
+      </svg>cnxf
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      <a href="/blog/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a1.5 1.5 0 0 0-1.5-1.5h-5A1.5 1.5 0 0 1 4 16z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><span class="nav-label">文章</span>
+      </a>
+      
+      <a href="/about/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.2 3.9-5 7-5s5.8 1.8 7 5"/></svg><span class="nav-label">关于</span>
+      </a>
+      
+      <a href="https://github.com/cnxf09" target="_blank" rel="noopener noreferrer">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span class="nav-label">GitHub</span>
+      </a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main>
+    
+<article class="article-layout" style="--accent: #d97757">
+  <header class="article-head">
+    <div class="eyebrow">
+      <a class="chip" href="/series/notes/"><span class="swatch" aria-hidden="true"></span>数理笔记</a>
+      <time datetime="2026-11-14">2026 年 11 月 14 日</time>
+      <span class="dot"></span>
+      <span>约 2 分钟</span>
+    </div>
+    <h1>[零知识证明] 第2章 指纹方法与Freivalds 算法</h1>
+    
+  </header>
+
+  
+
+  <div class="article-main">
+    <details class="toc-mobile" hidden><summary>目录<span>＋</span></summary><ol class="toc-list"></ol></details>
+    <div class="prose" id="prose"><p>我们通过两个例子来感受随机的力量</p>
+<h2 id="reed-solomon-指纹方法">Reed-Solomon 指纹方法</h2>
+<h3 id="问题设定">问题设定</h3>
+<blockquote>
+<p>Alice 和 Bob 分居两地, 他们手里各有一份文件 <span
+class="math inline">\(a=(a_1,a_2,\cdots,a_n)\)</span>和 <span
+class="math inline">\(b=(b_1,b_2,\cdots,b_n)\)</span>. 假设这些字符取自
+ASCII 码, 共<span class="math inline">\(m=128\)</span>种可能.
+现在他们想快速确定手里的两份文件是否相等.</p>
+</blockquote>
+<p>一个朴素的方法是 Alice 将手里的文件 <span
+class="math inline">\(A\)</span>发送给 Bob, Bob 在收到 Alice
+发来的文件后 逐字比对<span class="math inline">\(a_i
+\overset{?}{=}b_i\)</span>. 但是当<span
+class="math inline">\(n\)</span>非常大的时候, 他们需要发送<span
+class="math inline">\(n\)</span>个字符是难以承受的. Alice
+希望用尽可能少的通信来解决这个问题.</p>
+<p>我们可以牺牲一点确定性, 来换取更少的通信.
+熟悉密码学的人可能会想到哈希函数.</p>
+<h3 id="通信协定">通信协定</h3>
+<h4 id="总体思路">总体思路</h4>
+<p>大致的思路是这样的. Alice 从一族较小的哈希函数族<span
+class="math inline">\(\mathcal{H}\)</span>中选择一个函数<span
+class="math inline">\(h\)</span>, 将<span
+class="math inline">\(h(x)\)</span>视为<span
+class="math inline">\(x\)</span>的指纹. 所谓指纹, 就是指<span
+class="math inline">\(h(x)\)</span>是<span
+class="math inline">\(x\)</span>“近乎唯一”的标识. 对任意的<span
+class="math inline">\(y\ne x\)</span>, 随机选取的<span
+class="math inline">\(h\)</span>, <span
+class="math inline">\(x\)</span>和<span
+class="math inline">\(y\)</span>的指纹以高概率不相同.即 <span
+class="math display">\[
+\forall y\ne x,\Pr_\limits{h\in\mathcal H}[h(x)=h(y)]&lt;\varepsilon.
+\]</span> Alice 将<span class="math inline">\(h\)</span>和 <span
+class="math inline">\(h(a)\)</span> 发送给Bob, 然后 Bob 计算<span
+class="math inline">\(h(b)\)</span>.如果</p>
+<ul>
+<li><span class="math inline">\(h(a)=h(b)\)</span>, 那么Bob
+有足够把握(尽管不是100%)确信<span
+class="math inline">\(a=b\)</span>.</li>
+<li><span class="math inline">\(h(a)\ne h(b)\)</span>, 那么Bob
+就知道<span class="math inline">\(a\ne b\)</span>.</li>
+</ul>
+<h4 id="具体细节">具体细节</h4>
+<p>固定一个素数足够大的素数<span
+class="math inline">\(p&gt;\{m,n^2\}\)</span>.这样定义我们的哈希函数.</p>
+<div class="callout callout-definition"><div class="callout-title">定义</div><div class="callout-body"><p>对于每个<span class="math inline">\(r\in \mathbb F_p\)</span>, 定义
+<span class="math display">\[
+h_r(a)=\sum_{i=1}^{n}a_i\cdot r^{i-1}
+\]</span> 哈希函数族<span class="math inline">\(\mathcal H=\{h_r:r\in
+\mathbb F_p\}\)</span>.</p>
+</div></div>
+<p>直观地说就是把文件<span
+class="math inline">\(a\)</span>中的字符看成一元<span
+class="math inline">\(n\)</span>次多项式的系数, 然后选择一个数<span
+class="math inline">\(r\)</span>带入这个多项式.</p>
+<h3 id="分析">分析</h3>
+<p>正如我们前面断言的, 这个协议会以很高的概率给出正确答案, 具体来说</p>
+<ul>
+<li>如果<span class="math inline">\(a=b\)</span>, 则无论<span
+class="math inline">\(r\)</span>取何值, Bob都输出 EQUAL.</li>
+<li>如果<span class="math inline">\(a\ne b\)</span>,则 Bob 以至少<span
+class="math inline">\(1-(n-1)/p&gt;1-1/n\)</span>的概率输出NOT-EQUAL</li>
+</ul>
+<p>上面第一点是显然的. 因为无论<span
+class="math inline">\(r\)</span>取何值, 都有<span
+class="math inline">\(h_r(a)=h_r(b)\)</span>.
+第二个性质依赖以下关键事实.</p>
+<div class="callout callout-theorem"><div class="callout-title">定理</div><div class="callout-body"><p>对于两个不同的多项式<span class="math inline">\(p_a,p_b\)</span>,
+如果它们的次数至多为<span class="math inline">\(n\)</span>,
+且系数位于<span class="math inline">\(\mathbb F_p\)</span>中,
+那么在<span class="math inline">\(\mathbb F_p\)</span>中至多有<span
+class="math inline">\(n\)</span>个不同的<span
+class="math inline">\(x\)</span>值满足<span
+class="math inline">\(p_a(x)=p_b(x)\)</span>.</p>
+</div></div>
+<blockquote>
+<p>证明由有限域版本的代数基本定理可以轻松得到</p>
+</blockquote>
+<p>由上述事实不难看出, 如果<span class="math inline">\(a\ne b\)</span>,
+则至多有<span class="math inline">\(n-1\)</span>个<span
+class="math inline">\(r\)</span>使得<span
+class="math inline">\(h_r(a)=h_r(b)\)</span>.由于<span
+class="math inline">\(r\)</span>是随机选取的, 这个概率低于<span
+class="math inline">\(n-1/p&lt;1/n\)</span>.</p>
+<h3 id="协议的开销">协议的开销</h3>
+<p>上面的协议中</p>
+</div>
+  </div>
+
+  <aside class="toc-side" hidden>
+    <nav class="toc-panel" aria-label="目录">
+      <div class="toc-title">目录</div>
+      <ol class="toc-list"></ol>
+    </nav>
+  </aside>
+
+  <footer class="article-foot">
+    <span>发布于 2026 年 11 月 14 日</span>
+    
+    
+    <span class="tags"><span class="tag">#零知识证明</span></span>
+    
+    <a href="/blog/">全部文章</a>
+  </footer>
+
+  
+  <nav class="post-nav" aria-label="上下篇">
+    
+    <a class="prev" href="/posts/introduction/"><span><svg class="arrow arrow-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>上一篇</span><b>[零知识证明]第1章 基本概念</b></a>
+    
+    
+  </nav>
+  
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container footer-meta">
+    <span>© 2026 cnxf</span>
+    <span class="dot"></span>
+    <span>我本微末凡尘，却也心向天空</span>
+  </div>
+  <div class="footer-river" aria-hidden="true">
+    <svg class="footer-river-svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <g class="river-layer r1"><path d="M0 70 C 126 44, 234 44, 360 70 S 594 96, 720 70 S 954 44, 1080 70 S 1314 96, 1440 70 S 1674 44, 1800 70 S 2034 96, 2160 70 S 2394 44, 2520 70 S 2754 96, 2880 70 V150 H0 Z" fill="#6a9bcc" opacity=".14"/></g>
+      <g class="river-layer r2"><path d="M0 95 C 252 73, 468 73, 720 95 S 1188 117, 1440 95 S 1908 73, 2160 95 S 2628 117, 2880 95 V150 H0 Z" fill="#7f9e6e" opacity=".14"/></g>
+      <g class="river-layer r3"><path d="M0 118 C 84 102, 156 102, 240 118 S 396 134, 480 118 S 636 102, 720 118 S 876 134, 960 118 S 1116 102, 1200 118 S 1356 134, 1440 118 S 1596 102, 1680 118 S 1836 134, 1920 118 S 2076 102, 2160 118 S 2316 134, 2400 118 S 2556 102, 2640 118 S 2796 134, 2880 118 V150 H0 Z" fill="#d97757" opacity=".16"/></g>
+    </svg>
+    <svg class="drifter" viewBox="-14 -16 28 24" width="34" height="29"><path d="M-12 0 h24 l-5 6 h-14 z" fill="#454440"/><path d="M0 -1 V-14 l8 12 z" fill="#d97757"/><path d="M-1 -1 V-11 l-6 10 z" fill="#e3b04b"/></svg>
+  </div>
+</footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
