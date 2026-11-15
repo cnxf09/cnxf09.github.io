@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>[零知识证明] 第2章 指纹方法与Freivalds 算法 · cnxf</title>
-  <meta name="description" content="我本微末凡尘，却也心向天空">
+  <meta name="description" content="文章围绕随机化验证，先用Reed-Solomon指纹将文件比较转化为随机取点求多项式值，以较少通信高概率判断两份文件是否相等；随后给出Freivalds算法，通过随机向量检查矩阵乘法C=AB是否成立，在O(n²)时间内完成并分析其完备性与可靠性。">
   <meta property="og:title" content="[零知识证明] 第2章 指纹方法与Freivalds 算法 · cnxf">
   <meta property="og:site_name" content="cnxf">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -54,7 +54,7 @@
       <span>约 4 分钟</span>
     </div>
     <h1>[零知识证明] 第2章 指纹方法与Freivalds 算法</h1>
-    
+    <p class="lede">文章围绕随机化验证，先用Reed-Solomon指纹将文件比较转化为随机取点求多项式值，以较少通信高概率判断两份文件是否相等；随后给出Freivalds算法，通过随机向量检查矩阵乘法C=AB是否成立，在O(n²)时间内完成并分析其完备性与可靠性。</p>
   </header>
 
   
@@ -92,17 +92,17 @@ class="math inline">\(x\)</span>“近乎唯一”的标识. 对任意的<span
 class="math inline">\(y\ne x\)</span>, 随机选取的<span
 class="math inline">\(h\)</span>, <span
 class="math inline">\(x\)</span>和<span
-class="math inline">\(y\)</span>的指纹以高概率不相同.即 <span
+class="math inline">\(y\)</span>的指纹以高概率不相同. 即 <span
 class="math display">\[
 \forall y\ne x,\Pr\limits_{h\in\mathcal H}[h(x)=h(y)]&lt;\varepsilon.
 \]</span> Alice 将<span class="math inline">\(h\)</span>和 <span
-class="math inline">\(h(a)\)</span> 发送给Bob, 然后 Bob 计算<span
+class="math inline">\(h(a)\)</span> 发送给 Bob, 然后 Bob 计算<span
 class="math inline">\(h(b)\)</span>.如果</p>
 <ul>
-<li><span class="math inline">\(h(a)=h(b)\)</span>, 那么Bob
-有足够把握(尽管不是100%)确信<span
+<li><span class="math inline">\(h(a)=h(b)\)</span>, 那么 Bob
+有足够把握(尽管不是 100%)确信<span
 class="math inline">\(a=b\)</span>.</li>
-<li><span class="math inline">\(h(a)\ne h(b)\)</span>, 那么Bob
+<li><span class="math inline">\(h(a)\ne h(b)\)</span>, 那么 Bob
 就知道<span class="math inline">\(a\ne b\)</span>.</li>
 </ul>
 <h4 id="具体细节">具体细节</h4>
@@ -122,9 +122,10 @@ class="math inline">\(r\)</span>带入这个多项式.</p>
 <p>正如我们前面断言的, 这个协议会以很高的概率给出正确答案, 具体来说</p>
 <ul>
 <li>如果<span class="math inline">\(a=b\)</span>, 则无论<span
-class="math inline">\(r\)</span>取何值, Bob都输出 EQUAL.</li>
+class="math inline">\(r\)</span>取何值, Bob 都输出 EQUAL.</li>
 <li>如果<span class="math inline">\(a\ne b\)</span>,则 Bob 以至少<span
-class="math inline">\(1-(n-1)/p&gt;1-1/n\)</span>的概率输出NOT-EQUAL</li>
+class="math inline">\(1-(n-1)/p&gt;1-1/n\)</span>的概率输出
+NOT-EQUAL</li>
 </ul>
 <p>上面第一点是显然的. 因为无论<span
 class="math inline">\(r\)</span>取何值, 都有<span
@@ -157,9 +158,9 @@ class="math inline">\(p&lt;n^c\)</span>的情况下, 这只需要<span
 class="math inline">\(O(\log n)\)</span>比特, 远小于确定性协议的<span
 class="math inline">\(n\log m\)</span>.</p>
 <h3 id="讨论">讨论</h3>
-<p>上述协议称为Reed-Solomon 指纹方法是因为<span
+<p>上述协议称为 Reed-Solomon 指纹方法是因为<span
 class="math inline">\(h_r(a)\)</span>实际上是向量<span
-class="math inline">\((a_1,a_2,\cdots,a_n)\)</span>的一个Reed-Solomon
+class="math inline">\((a_1,a_2,\cdots,a_n)\)</span>的一个 Reed-Solomon
 编码的随机分量.</p>
 <h2 id="freivalds-算法">Freivalds 算法</h2>
 <h3 id="问题设定-1">问题设定</h3>
@@ -187,23 +188,22 @@ class="math inline">\(n\)</span>维向量相乘可以在<span
 class="math inline">\(O(n^2)\)</span>时间内完成.</p>
 <h3 id="完备性与可靠性分析">完备性与可靠性分析</h3>
 <p>令<span class="math inline">\(D=A\cdot B\)</span>,
-我们的目标是确定<span class="math inline">\(D=C\)</span>是否成立.即</p>
+我们的目标是确定<span class="math inline">\(D=C\)</span>是否成立. 即</p>
 <ul>
 <li>如果<span class="math inline">\(C=D\)</span>, 那么无论<span
 class="math inline">\(r\)</span>取何值, 算法都输出 YES</li>
 <li>如果<span class="math inline">\(C\ne D\)</span>, 算法以至少 <span
 class="math inline">\(1-(n-1)/p\)</span>的概率输出 NO.</li>
 </ul>
-<p>我们只需要检查第二个性质即可.假设<span class="math inline">\(C\ne
+<p>我们只需要检查第二个性质即可. 假设<span class="math inline">\(C\ne
 D\)</span>, 那么必定存在一个<span
 class="math inline">\(i\)</span>使得第<span
 class="math inline">\(i\)</span>行 <span class="math inline">\(C_i\ne
 D_i\)</span>, 而<span class="math inline">\((Cx)_i\)</span>恰好就是<span
 class="math inline">\(p_{C_i}(r)\)</span>,
-这样我们发现其实恰好是上一节中<span
-class="math inline">\(C_i\)</span>的Reed-Solomon指纹.
-后面可以根据上一节的分析<span class="math inline">\((Cx)_i\ne(A\cdot
-Bx)_i\)</span>的概率至少为<span
+这样我们发现其实恰好是上一节中<span class="math inline">\(C_i\)</span>的
+Reed-Solomon 指纹. 后面可以根据上一节的分析<span
+class="math inline">\((Cx)_i\ne(A\cdot Bx)_i\)</span>的概率至少为<span
 class="math inline">\(1-(n-1)/p\)</span>.</p>
 <div class="callout callout-remark"><div class="callout-title">注</div><div class="callout-body"><p>Freivalds 实际描述的算法使用完全随机的向量 <span
 class="math inline">\(x\in \mathbb F_p^n\)</span>, 而不是随机选取<span
