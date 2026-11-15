@@ -51,7 +51,7 @@
       <a class="chip" href="/series/notes/"><span class="swatch" aria-hidden="true"></span>数理笔记</a>
       <time datetime="2026-11-14">2026 年 11 月 14 日</time>
       <span class="dot"></span>
-      <span>约 2 分钟</span>
+      <span>约 4 分钟</span>
     </div>
     <h1>[零知识证明] 第2章 指纹方法与Freivalds 算法</h1>
     
@@ -148,7 +148,70 @@ class="math inline">\(h_r(a)=h_r(b)\)</span>.由于<span
 class="math inline">\(r\)</span>是随机选取的, 这个概率低于<span
 class="math inline">\(n-1/p&lt;1/n\)</span>.</p>
 <h3 id="协议的开销">协议的开销</h3>
-<p>上面的协议中</p>
+<p>上面的协议中 Alice 仅向 Bob 发送 <span class="math inline">\(\mathbb
+F_p\)</span>中的连两个元素，即<span
+class="math inline">\(h_r(a)\)</span>和<span
+class="math inline">\(r\)</span>. 在假设存在某个常数<span
+class="math inline">\(c\)</span>使得<span
+class="math inline">\(p&lt;n^c\)</span>的情况下, 这只需要<span
+class="math inline">\(O(\log n)\)</span>比特, 远小于确定性协议的<span
+class="math inline">\(n\log m\)</span>.</p>
+<h3 id="讨论">讨论</h3>
+<p>上述协议称为Reed-Solomon 指纹方法是因为<span
+class="math inline">\(h_r(a)\)</span>实际上是向量<span
+class="math inline">\((a_1,a_2,\cdots,a_n)\)</span>的一个Reed-Solomon
+编码的随机分量.</p>
+<h2 id="freivalds-算法">Freivalds 算法</h2>
+<h3 id="问题设定-1">问题设定</h3>
+<p>给定输入是<span class="math inline">\(\mathbb
+F_p\)</span>上的两个<span class="math inline">\(n\times
+n\)</span>矩阵<span class="math inline">\(A\)</span>和<span
+class="math inline">\(B\)</span>, 其中<span
+class="math inline">\(p&gt;n^2\)</span>是素数.
+我们考虑的是假设有人给我们一个矩阵<span
+class="math inline">\(C\)</span>, 我们想检查<span
+class="math inline">\(C=A\cdot B\)</span>是否成立.</p>
+<h3 id="算法">算法</h3>
+<p>首先, 随机选择<span class="math inline">\(r\in \mathbb F_p\)</span>,
+并令<span class="math inline">\(x=(1,r,r^2,\cdots,r^{n-1})\)</span>.
+然后计算<span class="math inline">\(y=Cx\)</span>和<span
+class="math inline">\(z=A\cdot Bx\)</span>; 如果<span
+class="math inline">\(y=z\)</span>就输出 YES ，否则输出 NO.</p>
+<h3 id="运行时间">运行时间</h3>
+<p>整个算法的运行时间为<span class="math inline">\(O(n^2)\)</span>.</p>
+<p>首先生成向量<span
+class="math inline">\(x=(1,r,r^2,\cdots,r^{n-1})\)</span>总共需要<span
+class="math inline">\(O^n\)</span>次乘法运算. 而一个<span
+class="math inline">\(n\times n\)</span>矩阵与一个<span
+class="math inline">\(n\)</span>维向量相乘可以在<span
+class="math inline">\(O(n^2)\)</span>时间内完成.</p>
+<h3 id="完备性与可靠性分析">完备性与可靠性分析</h3>
+<p>令<span class="math inline">\(D=A\cdot B\)</span>,
+我们的目标是确定<span class="math inline">\(D=C\)</span>是否成立.即</p>
+<ul>
+<li>如果<span class="math inline">\(C=D\)</span>, 那么无论<span
+class="math inline">\(r\)</span>取何值, 算法都输出 YES</li>
+<li>如果<span class="math inline">\(C\ne D\)</span>, 算法以至少 <span
+class="math inline">\(1-(n-1)/p\)</span>的概率输出 NO.</li>
+</ul>
+<p>我们只需要检查第二个性质即可.假设<span class="math inline">\(C\ne
+D\)</span>, 那么必定存在一个<span
+class="math inline">\(i\)</span>使得第<span
+class="math inline">\(i\)</span>行 <span class="math inline">\(C_i\ne
+D_i\)</span>, 而<span class="math inline">\((Cx)_i\)</span>恰好就是<span
+class="math inline">\(p_{C_i}(r)\)</span>,
+这样我们发现其实恰好是上一节中<span
+class="math inline">\(C_i\)</span>的Reed-Solomon指纹.
+后面可以根据上一节的分析<span class="math inline">\((Cx)_i\ne(A\cdot
+Bx)_i\)</span>的概率至少为<span
+class="math inline">\(1-(n-1)/p\)</span>.</p>
+<div class="callout callout-remark"><div class="callout-title">注</div><div class="callout-body"><p>Freivalds 实际描述的算法使用完全随机的向量 <span
+class="math inline">\(x\in \mathbb F_p^n\)</span>, 而不是随机选取<span
+class="math inline">\(r\in \mathbb F_p\)</span>然后取<span
+class="math inline">\(x=(1,r,\cdots,r^{n-1})\)</span>.</p>
+</div></div>
+<h2 id="一元拉格朗日插值">一元拉格朗日插值</h2>
+<p>略去</p>
 </div>
   </div>
 
@@ -161,7 +224,7 @@ class="math inline">\(n-1/p&lt;1/n\)</span>.</p>
 
   <footer class="article-foot">
     <span>发布于 2026 年 11 月 14 日</span>
-    
+    <span>更新于 2026 年 11 月 15 日</span>
     
     <span class="tags"><span class="tag">#零知识证明</span></span>
     
