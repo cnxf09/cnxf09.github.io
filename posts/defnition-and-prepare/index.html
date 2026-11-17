@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>[零知识证明] 第3章 定义与预备知识 · cnxf</title>
+  <meta name="description" content="围绕零知识证明所需的定义与预备知识，文章给出交互式证明、交互记录以及完备性和可靠性误差的定义，并说明论证系统只要求对多项式时间证明者具有计算可靠性；随后陈述Schwartz-Zippel引理，介绍多线性多项式、多线性扩展及其拉格朗日插值表示。">
+  <meta property="og:title" content="[零知识证明] 第3章 定义与预备知识 · cnxf">
+  <meta property="og:site_name" content="cnxf">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="site-header" data-scrolled="false">
+  <div class="container">
+    <a class="wordmark" href="/" aria-label="cnxf 首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" fill="#f3e3d8"/>
+        <path d="M7 25c4-1.6 7-1.6 10 0s7 1.6 10 0 6-1.6 7-1.2" fill="none" stroke="#6a9bcc" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24.5" cy="14.5" r="5" fill="#d97757"/>
+        <circle cx="12" cy="13" r="1.3" fill="#1a1a18"/>
+      </svg>cnxf
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      <a href="/blog/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a1.5 1.5 0 0 0-1.5-1.5h-5A1.5 1.5 0 0 1 4 16z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><span class="nav-label">文章</span>
+      </a>
+      
+      <a href="/about/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.2 3.9-5 7-5s5.8 1.8 7 5"/></svg><span class="nav-label">关于</span>
+      </a>
+      
+      <a href="https://github.com/cnxf09" target="_blank" rel="noopener noreferrer">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span class="nav-label">GitHub</span>
+      </a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main>
+    
+<article class="article-layout" style="--accent: #d97757">
+  <header class="article-head">
+    <div class="eyebrow">
+      <a class="chip" href="/series/notes/"><span class="swatch" aria-hidden="true"></span>数理笔记</a>
+      <time datetime="2026-11-17">2026 年 11 月 17 日</time>
+      <span class="dot"></span>
+      <span>约 3 分钟</span>
+    </div>
+    <h1>[零知识证明] 第3章 定义与预备知识</h1>
+    <p class="lede">围绕零知识证明所需的定义与预备知识，文章给出交互式证明、交互记录以及完备性和可靠性误差的定义，并说明论证系统只要求对多项式时间证明者具有计算可靠性；随后陈述Schwartz-Zippel引理，介绍多线性多项式、多线性扩展及其拉格朗日插值表示。</p>
+  </header>
+
+  
+
+  <div class="article-main">
+    <details class="toc-mobile" hidden><summary>目录<span>＋</span></summary><ol class="toc-list"></ol></details>
+    <div class="prose" id="prose"><h2 id="交互式证明interactive-proofs">交互式证明(Interactive
+Proofs)</h2>
+<p>给定一个将<span
+class="math inline">\(\{0,1\}^n\)</span>映射到有限值域<span
+class="math inline">\(\mathcal R\)</span>的函数<span
+class="math inline">\(f\)</span>, 一个针对<span
+class="math inline">\(f\)</span>的, 交换<span
+class="math inline">\(k\)</span>条消息的<em>交互式</em>证明系统(IP),
+有一个运行时间为<span
+class="math inline">\({\rm{ploy}}(n)\)</span>的概率验证者算法<span
+class="math inline">\(\mathcal
+V\)</span>和一个规定的(诚实的)确定性证明者算法<span
+class="math inline">\(\mathcal P\)</span>构成.
+它们都获得一个公共输入<span
+class="math inline">\(x\in\{0,1\}^n\)</span>.</p>
+<p>在协议开始时, <span class="math inline">\(\mathcal
+P\)</span>提供一个声称等于<span
+class="math inline">\(f(x)\)</span>的值<span
+class="math inline">\(y\)</span>.随后<span
+class="math inline">\(\mathcal P\)</span>与<span
+class="math inline">\(\mathcal V\)</span>交换一系列消息<span
+class="math inline">\(m_1,m_2,\cdots,m_k\)</span>. IP
+指定一方首先发送消息, 然后双方交替发送.</p>
+<p>我们将<span class="math inline">\(\mathcal P\)</span>和<span
+class="math inline">\(\mathcal V\)</span>视为”计算下一条消息”的算法.
+这意味着当轮到<span class="math inline">\(\mathcal
+V\)</span>发送消息<span class="math inline">\(m_i\)</span>时, 以<span
+class="math inline">\((x,m_1,m_2,\cdots,m_{i-1})\)</span>为输入运行<span
+class="math inline">\(\mathcal V\)</span>得到<span
+class="math inline">\(m_i\)</span>.<span class="math inline">\(\mathcal
+P\)</span>也是类似的. 值得注意的是, 由于<span
+class="math inline">\(\mathcal V\)</span>是概率算法, 因此<span
+class="math inline">\(m_i\)</span>也可能依赖验证者内部的随机性.</p>
+<div class="callout callout-definition"><div class="callout-title">交互记录</div><div class="callout-body"><p><span class="math inline">\(\mathcal P\)</span>与<span
+class="math inline">\(\mathcal V\)</span>交换的全部<span
+class="math inline">\(k\)</span>条消息组成的序列<span
+class="math inline">\((m_1,m_2,\cdots,m_k)\)</span>,
+连同所声称的答案<span class="math inline">\(y\)</span>,
+称为<strong>交互记录</strong>.</p>
+</div></div>
+<p>协议结束时, <span class="math inline">\(\mathcal
+V\)</span>必须输出<span class="math inline">\(0\)</span>或<span
+class="math inline">\(1\)</span>表示拒绝或接受证明者关于<span
+class="math inline">\(y=f(x)\)</span>的断言. 这个值可能依赖交互记录<span
+class="math inline">\(t\)</span>, 也可能依赖验证者内部的随机性.
+我们用符号<span class="math inline">\({\rm out}(\mathcal V,x,r,\mathcal
+P)\in\{0,1\}\)</span>, 其中<span
+class="math inline">\(r\)</span>是内部随机性.</p>
+<div class="callout callout-definition"><div class="callout-title">完备性与可靠性</div><div class="callout-body"><p>如果下面两个性质成立, 就称交互式证明系统<span
+class="math inline">\((\mathcal V, \mathcal
+P)\)</span>具有完备性误差<span
+class="math inline">\(\delta_c\)</span>和可靠性误差<span
+class="math inline">\(\delta_s\)</span>.</p>
+<ol type="1">
+<li><p>(完备性) 对于每个<span class="math inline">\(x\in
+\{0,1\}^n\)</span>, <span class="math display">\[
+\Pr\limits_r[{\rm out}(\mathcal V,x,r,\mathcal P)=1]\ge1-\delta_c.
+\]</span></p></li>
+<li><p>(可靠性) 对于每个<span
+class="math inline">\(x\in\{0,1\}^n\)</span>和每个确定性的证明者策略<span
+class="math inline">\(\mathcal P^{\prime}\)</span>, 如果<span
+class="math inline">\(\mathcal
+P^{\prime}\)</span>在协议开始时发送一个值<span
+class="math inline">\(y\ne f(x)\)</span>, 那么 <span
+class="math display">\[
+\Pr\limits_r[{\rm out}(\mathcal V,x,r,\mathcal P)=1]\le\delta_s.
+\]</span></p></li>
+</ol>
+<p>如果<span class="math inline">\(\delta_c,\delta_s\le 1/3\)</span>,
+则称该交互式证明系统是有效的.</p>
+</div></div>
+<p>简单来说就是, 对于诚实的证明者, 如果给出的<span
+class="math inline">\(y\)</span>是”正确的”, 则存在令人信服的证明.
+对于给出的<span class="math inline">\(y\ne
+f(x)\)</span>则不存在作弊的证明者给出令人信服的证明.</p>
+<h2 id="论证系统argument-systems">论证系统(Argument Systems)</h2>
+<div class="callout callout-definition"><div class="callout-title">论证系统</div><div class="callout-body"><p>针对函数<span class="math inline">\(f\)</span>的论证系统,
+就是针对<span class="math inline">\(f\)</span>的一个交互式证明,
+但其中的可靠性条件只需对多项式时间运行的证明者策略成立.</p>
+</div></div>
+<p>这个可靠性称为计算可靠性.</p>
+<h2 id="scwartz-zippel-引理">Scwartz-Zippel 引理</h2>
+<div class="callout callout-lemma"><div class="callout-title">Scwartz-Zippel 引理</div><div class="callout-body"><p>令<span class="math inline">\(\mathbb F\)</span>为任意域, 并令<span
+class="math inline">\(g: \mathbb F^m\to \mathbb
+F\)</span>为一个非零的<span class="math inline">\(m\)</span>元多项式,
+其总次数至多为<span class="math inline">\(d\)</span>.
+那么对于任意有限集合<span class="math inline">\(S\subseteq \mathbb
+F\)</span>, 都有 <span class="math display">\[
+\Pr\limits_{x\leftarrow S^m}[g(x)=0]\le d/|S|
+\]</span> 作为推论, 两个不同的, 次数均至多为<span
+class="math inline">\(d\)</span>的多项式, 在<span
+class="math inline">\(S^m\)</span>上至多在比例为<span
+class="math inline">\(d/|S|\)</span>个点上取值相同.</p>
+</div></div>
+<h2 id="低次扩展与多线性扩展">低次扩展与多线性扩展</h2>
+<div class="callout callout-definition"><div class="callout-title">定义</div><div class="callout-body"><p>如果一个多元多项式每个变量的次数都至多为 1, 则称之为多线性的.</p>
+</div></div>
+<p>任何函数<span class="math inline">\(f:\{0,1\}^v\to \mathbb
+F\)</span>在<span class="math inline">\(\mathbb
+F\)</span>上都有唯一的多线性扩展(MLE), 我们用记号<span
+class="math inline">\(\tilde f\)</span>来表示</p>
+<blockquote>
+<p>所谓多线性扩展就是一个多项式<span class="math inline">\(\tilde
+f\)</span>是<span class="math inline">\(\mathbb F^v\to \mathbb
+F\)</span>上多线性的, 在<span
+class="math inline">\(x\in\{0,1\}^v\)</span>上满足<span
+class="math inline">\(f(x)=\tilde f(x)\)</span>.</p>
+</blockquote>
+<div class="callout callout-lemma"><div class="callout-title">引理</div><div class="callout-body"><p>(多线性多项式的拉格朗日插值) 令<span
+class="math inline">\(f:\{0,1\}^v\to \mathbb F\)</span>.
+那么下面的多线性多项式<span class="math inline">\(\tilde
+f\)</span>扩展了<span class="math inline">\(f\)</span> <span
+class="math display">\[
+\tilde f(x_1,\cdots,x_v)=\sum_{w\in\{0,1\}^n}f(w)\cdot
+\prod_{i=1}^v(x_iw_i+(1-x_i)(1-w_i))
+\]</span> 令<span
+class="math inline">\(\chi_w(x_1,\cdots,x_v):=\prod\limits_{i=1}^v(x_iw_i+(1-x_i)(1-w_i))\)</span>.集合<span
+class="math inline">\(\{\chi_w:w\in\{0,1\}^v\}\)</span>称为插值集合为<span
+class="math inline">\(\{0,1\}^v\)</span>的多线性拉格朗日基多项式集合.</p>
+</div></div>
+<p>证明(包括唯一性)从略.</p>
+</div>
+  </div>
+
+  <aside class="toc-side" hidden>
+    <nav class="toc-panel" aria-label="目录">
+      <div class="toc-title">目录</div>
+      <ol class="toc-list"></ol>
+    </nav>
+  </aside>
+
+  <footer class="article-foot">
+    <span>发布于 2026 年 11 月 17 日</span>
+    
+    
+    <span class="tags"><span class="tag">#zk</span></span>
+    
+    <a href="/blog/">全部文章</a>
+  </footer>
+
+  
+  <nav class="post-nav" aria-label="上下篇">
+    
+    <a class="prev" href="/posts/reed-solomon/"><span><svg class="arrow arrow-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>上一篇</span><b>[零知识证明] 第2章 指纹方法与Freivalds 算法</b></a>
+    
+    
+  </nav>
+  
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container footer-meta">
+    <span>© 2026 cnxf</span>
+    <span class="dot"></span>
+    <span>我本微末凡尘，却也心向天空</span>
+  </div>
+  <div class="footer-river" aria-hidden="true">
+    <svg class="footer-river-svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <g class="river-layer r1"><path d="M0 70 C 126 44, 234 44, 360 70 S 594 96, 720 70 S 954 44, 1080 70 S 1314 96, 1440 70 S 1674 44, 1800 70 S 2034 96, 2160 70 S 2394 44, 2520 70 S 2754 96, 2880 70 V150 H0 Z" fill="#6a9bcc" opacity=".14"/></g>
+      <g class="river-layer r2"><path d="M0 95 C 252 73, 468 73, 720 95 S 1188 117, 1440 95 S 1908 73, 2160 95 S 2628 117, 2880 95 V150 H0 Z" fill="#7f9e6e" opacity=".14"/></g>
+      <g class="river-layer r3"><path d="M0 118 C 84 102, 156 102, 240 118 S 396 134, 480 118 S 636 102, 720 118 S 876 134, 960 118 S 1116 102, 1200 118 S 1356 134, 1440 118 S 1596 102, 1680 118 S 1836 134, 1920 118 S 2076 102, 2160 118 S 2316 134, 2400 118 S 2556 102, 2640 118 S 2796 134, 2880 118 V150 H0 Z" fill="#d97757" opacity=".16"/></g>
+    </svg>
+    <svg class="drifter" viewBox="-14 -16 28 24" width="34" height="29"><path d="M-12 0 h24 l-5 6 h-14 z" fill="#454440"/><path d="M0 -1 V-14 l8 12 z" fill="#d97757"/><path d="M-1 -1 V-11 l-6 10 z" fill="#e3b04b"/></svg>
+  </div>
+</footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

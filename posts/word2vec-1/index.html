@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>CS224N笔记1: 词向量 · cnxf</title>
-  <meta name="description" content="我本微末凡尘，却也心向天空">
+  <meta name="description" content="笔记围绕 word2vec 词嵌入展开：它把词映射为低维稠密向量，让语义相近的词在向量空间中相近，并基于上下文决定词义的分布假设；重点说明 Skip-gram 的中心词与上下文词双向量设定、参数规模及窗口似然函数。">
   <meta property="og:title" content="CS224N笔记1: 词向量 · cnxf">
   <meta property="og:site_name" content="cnxf">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -54,7 +54,7 @@
       <span>约 1 分钟</span>
     </div>
     <h1>CS224N笔记1: 词向量</h1>
-    
+    <p class="lede">笔记围绕 word2vec 词嵌入展开：它把词映射为低维稠密向量，让语义相近的词在向量空间中相近，并基于上下文决定词义的分布假设；重点说明 Skip-gram 的中心词与上下文词双向量设定、参数规模及窗口似然函数。</p>
   </header>
 
   
@@ -112,7 +112,7 @@ class="math inline">\(w_{t+j}\)</span>的概率. 对语料中的每个词,
 
   <footer class="article-foot">
     <span>发布于 2026 年 10 月 16 日</span>
-    <span>更新于 2026 年 11 月 13 日</span>
+    <span>更新于 2026 年 11 月 15 日</span>
     
     <span class="tags"><span class="tag">#LLM</span></span>
     
@@ -125,7 +125,7 @@ class="math inline">\(w_{t+j}\)</span>的概率. 对语料中的每个词,
     <a class="prev" href="/posts/hello-world/"><span><svg class="arrow arrow-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>上一篇</span><b>你好，新博客</b></a>
     
     
-    <a class="next" href="/posts/introduction/"><span>下一篇<svg class="arrow arrow-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span><b>[零知识证明]第1章 基本概念</b></a>
+    <a class="next" href="/posts/introduction/"><span>下一篇<svg class="arrow arrow-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span><b>[零知识证明] 第1章 基本概念</b></a>
     
   </nav>
   
