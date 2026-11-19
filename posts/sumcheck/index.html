@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>[零知识证明] 第4章 交互式证明 · cnxf</title>
+  <meta name="description" content="我本微末凡尘，却也心向天空">
+  <meta property="og:title" content="[零知识证明] 第4章 交互式证明 · cnxf">
+  <meta property="og:site_name" content="cnxf">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="site-header" data-scrolled="false">
+  <div class="container">
+    <a class="wordmark" href="/" aria-label="cnxf 首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" fill="#f3e3d8"/>
+        <path d="M7 25c4-1.6 7-1.6 10 0s7 1.6 10 0 6-1.6 7-1.2" fill="none" stroke="#6a9bcc" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24.5" cy="14.5" r="5" fill="#d97757"/>
+        <circle cx="12" cy="13" r="1.3" fill="#1a1a18"/>
+      </svg>cnxf
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      <a href="/blog/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a1.5 1.5 0 0 0-1.5-1.5h-5A1.5 1.5 0 0 1 4 16z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><span class="nav-label">文章</span>
+      </a>
+      
+      <a href="/about/">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.2 3.9-5 7-5s5.8 1.8 7 5"/></svg><span class="nav-label">关于</span>
+      </a>
+      
+      <a href="https://github.com/cnxf09" target="_blank" rel="noopener noreferrer">
+        <svg class="icon nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span class="nav-label">GitHub</span>
+      </a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main>
+    
+<article class="article-layout" style="--accent: #d97757">
+  <header class="article-head">
+    <div class="eyebrow">
+      <a class="chip" href="/series/notes/"><span class="swatch" aria-hidden="true"></span>数理笔记</a>
+      <time datetime="2026-11-17">2026 年 11 月 17 日</time>
+      <span class="dot"></span>
+      <span>约 3 分钟</span>
+    </div>
+    <h1>[零知识证明] 第4章 交互式证明</h1>
+    
+  </header>
+
+  
+
+  <div class="article-main">
+    <details class="toc-mobile" hidden><summary>目录<span>＋</span></summary><ol class="toc-list"></ol></details>
+    <div class="prose" id="prose"><h2 id="sumcheck-协议">sumcheck 协议</h2>
+<p>sumcheck协议是一个重要的交互式证明协议。</p>
+<p>给定一个定义在有限域<span class="math inline">\(\mathbb
+F\)</span>上的<span class="math inline">\(v\)</span>元多项式<span
+class="math inline">\(g\)</span>. sumchek协议的补丁是,
+让证明者向验证者提供下面这个和: <span class="math display">\[
+H:=
+\sum_{b_1\in\{0,1\}}\sum_{b_2\in\{0,1\}}\cdots\sum_{b_v\in\{0,1\}}g(b_1,\cdots,b_v)=\sum_{\boldsymbol{b}\in\{0,1\}^v}g(\boldsymbol{b}).
+\]</span></p>
+<h3 id="协议开始部分">协议开始部分</h3>
+<p>在sumcheck 协议开始时, 证明者发送一个值<span
+class="math inline">\(C_1\)</span>, 声称它等于真正的答案<span
+class="math inline">\(H\)</span>. sumcheck 协议分为<span
+class="math inline">\(v\)</span>轮.</p>
+<p>在第1轮开始时, 证明这发送一个多项式<span
+class="math inline">\(g_1(X_1)\)</span>声称对于如下定义的多项式<span
+class="math inline">\(s_1(X_1)\)</span> <span class="math display">\[
+s_1(X_1):=\sum_{(x_2,x_3,\cdots,x_v)\in\{0,1\}^{v-1}}g(X_1,x_2,\cdots,x_v)
+\]</span> 由<span class="math inline">\(s_1(X_1)\)</span>的定义, 我们有
+<span class="math display">\[
+H=s_1(0)+s_1(1).
+\]</span> 因此验证者检查<span
+class="math inline">\(C_1=g_1(0)+g_1(1)\)</span>, 并且检查<span
+class="math inline">\(g_1\)</span>的次数至多为<span
+class="math inline">\(\deg_1(g)\)</span>(<span
+class="math inline">\(\deg_i(g)\)</span>的含义是<span
+class="math inline">\(x_i\)</span>在<span
+class="math inline">\(g\)</span>中的次数). 当两项检查都通过后,
+协议进行下一步, 否则拒绝该断言.</p>
+<p>下面, 验证者<span class="math inline">\(\mathcal
+V\)</span>需要验证<span
+class="math inline">\(g_1(X_1)=s_1(X_1)\)</span>是否成立.sumcheck协议的思路是,
+<span class="math inline">\(\mathcal V\)</span>随机选择一个元素<span
+class="math inline">\(r_1\in \mathbb F\)</span>, 并确认 <span
+class="math display">\[
+g_1(r_1)=s_1(r_1)
+\]</span> 展开就是 <span class="math display">\[
+g_1(r_1)=\sum_{(x_2,\cdots,x_v)\in\{0,1\}^{v-1}}g(r_1,x_2,\cdots,x_v).\tag{$\ast$}
+\]</span> 这同样也符合sumcheck协议要检查的表达式类型.
+我们只需递归地使用上述步骤就行.</p>
+<h3 id="协议第2轮">协议第2轮</h3>
+<p>为了熟悉步骤, 我们走一遍第2轮的流程.</p>
+<p>现在我们的目标是验证<span
+class="math inline">\((\ast)\)</span>式的正确性. 首先证明者<span
+class="math inline">\(\mathcal P\)</span>声称<span
+class="math inline">\(g_2(X_2)=s_2(X_2)\)</span>, 其中<span
+class="math inline">\(s_2\)</span>定义为 <span class="math display">\[
+s_2(X_2):=\sum_{(x_3,\cdots,x_v)\in\{0,1\}^{v-2}}g(r_1,X_2,\cdots,x_v).
+\]</span> 然后<span class="math inline">\(\mathcal V\)</span>检查</p>
+<ol type="1">
+<li><span class="math inline">\(g_2(X_2)\)</span>的次数至多为<span
+class="math inline">\(\deg_2(g)\)</span>.</li>
+<li><span class="math inline">\(g_2(0)+g_2(1)=g_1(r_1)\)</span>.</li>
+</ol>
+<p>如果检查不通过则拒绝, 否则进行下一步.</p>
+<p>现在<span class="math inline">\(\mathcal V\)</span>要确认的是<span
+class="math inline">\(g_2(X_2)\overset{?}{=}s_2(X_2)\)</span>.同样地,
+选择<span class="math inline">\(r_2\in\mathbb F\)</span>发送给<span
+class="math inline">\(\mathcal P\)</span>以确认 <span
+class="math display">\[
+g_2(r_2)=s_2(r_2)
+\]</span></p>
+<h3 id="协议第3到v-1轮">协议第3到<span
+class="math inline">\(v-1\)</span>轮</h3>
+<p>在第<span class="math inline">\(i\)</span>轮, <span
+class="math inline">\(\mathcal P\)</span>声称 <span
+class="math display">\[
+g_i(X_i)=s_i(X_i)=\sum\limits_{(x_{i+1},\cdots,x_{v})\in\{0,1\}^{v-i}}g(r_1,\cdots,r_i-1,X_i,x_{i+1},\cdots,x_v).
+\]</span> <span class="math inline">\(\mathcal V\)</span>检查<span
+class="math inline">\(g_i(X_i)\)</span>的次数至多为<span
+class="math inline">\(\deg_i(g)\)</span>; 并且<span
+class="math inline">\(g_i(0)+g_i(1)=g_{i-1}(r_{i-1})\)</span>.
+如果不通过则拒绝, 否则进行下一步: 发送<span class="math inline">\(r_i\in
+\mathbb F\)</span>给<span class="math inline">\(\mathcal P\)</span>.</p>
+<h3 id="协议最后一轮">协议最后一轮</h3>
+<p>第<span class="math inline">\(v\)</span>轮, <span
+class="math inline">\(\mathcal P\)</span>收到一个随机数<span
+class="math inline">\(r_v\)</span>.<span class="math inline">\(\mathcal
+P\)</span>要证明<span
+class="math inline">\(g_v(r_v)=s_v(r_v)\)</span>.即 <span
+class="math display">\[
+g_v(r_v)=g(r_1,r_2,\cdots,r_v),
+\]</span> <span class="math inline">\(\mathcal P\)</span>只需要计算<span
+class="math inline">\(g_v(r_v)\)</span>然后发送给<span
+class="math inline">\(\mathcal V\)</span>, <span
+class="math inline">\(\mathcal V\)</span>可以查询(计算)<span
+class="math inline">\(g(\boldsymbol{r})=g(r_1,r_2,\cdots,r_v)\)</span>来验证.如果相等则接受否则拒绝.</p>
+<h3 id="协议的完备性与可靠性">协议的完备性与可靠性</h3>
+<p><占位后补></p>
+<h3 id="开销讨论">开销讨论</h3>
+<p>sumcheck协议对<span
+class="math inline">\(g\)</span>的每一个变量执行议论, 总共执行轮<span
+class="math inline">\(v\)</span>轮, 证明者向验证者发送的通信总量为<span
+class="math inline">\(\sum_{i=1}^v(\deg_i(g)+1)=v+\sum_{i=1}^v\deg_i(g)\le
+v(d+1)\)</span>.个域元素.我们假设每个变量的次数至多为<span
+class="math inline">\(d\)</span>, 计算一次<span
+class="math inline">\(g\)</span>的成本为<span
+class="math inline">\(T_g\)</span>.
+下表记录了sumcheck协议的相关开销.</p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 12%" />
+<col style="width: 28%" />
+<col style="width: 22%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目</th>
+<th>交互轮数</th>
+<th>通信量</th>
+<th>验证者计算量</th>
+<th>证明者计算量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开销</td>
+<td><span class="math inline">\(v\)</span>轮</td>
+<td><span class="math inline">\(O(v(d+1))\)</span>个域元素</td>
+<td><span class="math inline">\(O(v(d+1))+T_g\)</span></td>
+<td><span class="math inline">\(O((d+1)2^v(T_g+1))\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sumcheck的应用-sat-in-ip">sumcheck的应用: #SAT <span
+class="math inline">\(\in\)</span> IP</h3>
+<p><img src="image-20261119131938093.png" alt="布尔公式" style="zoom:67%;" /></p>
+</div>
+  </div>
+
+  <aside class="toc-side" hidden>
+    <nav class="toc-panel" aria-label="目录">
+      <div class="toc-title">目录</div>
+      <ol class="toc-list"></ol>
+    </nav>
+  </aside>
+
+  <footer class="article-foot">
+    <span>发布于 2026 年 11 月 17 日</span>
+    <span>更新于 2026 年 11 月 19 日</span>
+    
+    <span class="tags"><span class="tag">#zk</span></span>
+    
+    <a href="/blog/">全部文章</a>
+  </footer>
+
+  
+  <nav class="post-nav" aria-label="上下篇">
+    
+    <a class="prev" href="/posts/defnition-and-prepare/"><span><svg class="arrow arrow-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>上一篇</span><b>[零知识证明] 第3章 定义与预备知识</b></a>
+    
+    
+  </nav>
+  
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container footer-meta">
+    <span>© 2026 cnxf</span>
+    <span class="dot"></span>
+    <span>我本微末凡尘，却也心向天空</span>
+  </div>
+  <div class="footer-river" aria-hidden="true">
+    <svg class="footer-river-svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <g class="river-layer r1"><path d="M0 70 C 126 44, 234 44, 360 70 S 594 96, 720 70 S 954 44, 1080 70 S 1314 96, 1440 70 S 1674 44, 1800 70 S 2034 96, 2160 70 S 2394 44, 2520 70 S 2754 96, 2880 70 V150 H0 Z" fill="#6a9bcc" opacity=".14"/></g>
+      <g class="river-layer r2"><path d="M0 95 C 252 73, 468 73, 720 95 S 1188 117, 1440 95 S 1908 73, 2160 95 S 2628 117, 2880 95 V150 H0 Z" fill="#7f9e6e" opacity=".14"/></g>
+      <g class="river-layer r3"><path d="M0 118 C 84 102, 156 102, 240 118 S 396 134, 480 118 S 636 102, 720 118 S 876 134, 960 118 S 1116 102, 1200 118 S 1356 134, 1440 118 S 1596 102, 1680 118 S 1836 134, 1920 118 S 2076 102, 2160 118 S 2316 134, 2400 118 S 2556 102, 2640 118 S 2796 134, 2880 118 V150 H0 Z" fill="#d97757" opacity=".16"/></g>
+    </svg>
+    <svg class="drifter" viewBox="-14 -16 28 24" width="34" height="29"><path d="M-12 0 h24 l-5 6 h-14 z" fill="#454440"/><path d="M0 -1 V-14 l8 12 z" fill="#d97757"/><path d="M-1 -1 V-11 l-6 10 z" fill="#e3b04b"/></svg>
+  </div>
+</footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
